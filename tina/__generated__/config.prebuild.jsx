@@ -17,6 +17,12 @@ var config_default = defineConfig({
       publicFolder: "public"
     }
   },
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN || "",
+      stopwordLanguages: ["eng"]
+    }
+  },
   schema: {
     collections: [
       {
