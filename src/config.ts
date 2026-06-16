@@ -35,7 +35,7 @@ export const site = {
   //   Formspree:   https://formspree.io/f/<FORM_ID>
   // Leave '' to show a "not connected yet" notice instead.
   newsletter: {
-    action: '',
+    action: 'https://abhieq.substack.com/api/v1/free',
   },
 } as const;
 
