@@ -340,7 +340,8 @@ main { flex: 1 0 auto; padding-bottom: 6rem; }
 .back-link:hover { color: var(--accent); }
 
 /* ── Subscribe ──────────────────────────────────────────────────────────── */
-.lead { font-size: 1.15rem; color: var(--muted-strong); }
+.subscribe-page { padding-top: clamp(3rem, 12vh, 7rem); }
+.lead { font-size: 1.15rem; color: var(--fg); }
 .subscribe-form { display: flex; gap: 0.6rem; margin: 1.6rem 0; flex-wrap: wrap; }
 .subscribe-form input[type='email'] {
   flex: 1;
@@ -365,6 +366,24 @@ main { flex: 1 0 auto; padding-bottom: 6rem; }
   cursor: pointer;
 }
 .btn:hover { background: var(--accent-hover); }
+.subscribe-form-compact {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 118px;
+  gap: 0;
+  max-width: 445px;
+}
+.subscribe-form-compact input[type='email'] {
+  border-color: var(--accent);
+  border-radius: 3px 0 0 3px;
+  border-right: 0;
+  height: 52px;
+  padding: 0 0.9rem;
+}
+.subscribe-form-compact .btn {
+  border-radius: 0 3px 3px 0;
+  height: 52px;
+  padding: 0 1rem;
+}
 .follow { display: flex; gap: 0.8rem; margin-top: 1.6rem; flex-wrap: wrap; }
 .follow a { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 1rem; color: var(--nav); }
 .follow a:hover { border-color: var(--accent); color: var(--accent); }
@@ -519,13 +538,16 @@ main { flex: 1 0 auto; padding-bottom: 6rem; }
   .page-title { font-size: 2rem; }
   .subscribe-form { display: grid; }
   .subscribe-form input[type='email'] { min-width: 0; }
+  .subscribe-form-compact { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
 @media (max-width: 380px) {
   .nav-subscribe-form { grid-template-columns: 1fr; }
-  .nav-subscribe-form input[type='email'] {
+  .nav-subscribe-form input[type='email'],
+  .subscribe-form-compact input[type='email'] {
     border-right: 1px solid var(--accent);
     border-radius: 3px 3px 0 0;
   }
-  .nav-subscribe-form button[type='submit'] { border-radius: 0 0 3px 3px; }
+  .nav-subscribe-form button[type='submit'],
+  .subscribe-form-compact .btn { border-radius: 0 0 3px 3px; }
 }
