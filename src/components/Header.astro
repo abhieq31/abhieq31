@@ -34,9 +34,7 @@ const action = site.newsletter?.action || '/subscribe';
     <form
       class="nav-subscribe-form"
       id="nav-subscribe-form"
-      action={action}
-      method="post"
-      target="_blank"
+      novalidate
     >
       <input
         type="email"
@@ -81,5 +79,35 @@ const action = site.newsletter?.action || '/subscribe';
   cancelBtn?.addEventListener('click', closeSubscribe);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && subForm?.classList.contains('open')) closeSubscribe();
+  });
+
+  subForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const emailInput = subForm.querySelector<HTMLInputElement>('input[type=email]');
+    const submitBtn  = subForm.querySelector<HTMLButtonElement>('button[type=submit]');
+    const email = emailInput?.value.trim();
+    if (!email || !submitBtn) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '…';
+
+    try {
+      const res = await fetch('https://abhieq31.substack.com/api/v1/free', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok || res.status === 200) {
+        submitBtn.textContent = 'Done ✓';
+        if (emailInput) emailInput.value = '';
+        setTimeout(closeSubscribe, 1800);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Subscribe';
+      if (emailInput) emailInput.placeholder = 'Try again';
+    }
   });
 </script>

@@ -1,23 +1,61 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../config';
-const action = site.newsletter.action;
 ---
-<Base title="Subscribe" description={`Subscribe to ${site.name} — new posts in your inbox.`}>
+<Base title="Subscribe" description={`Subscribe to ${site.name} — new posts and episodes in your inbox.`}>
   <div class="container subscribe-page">
     <h1 class="page-title">Subscribe</h1>
-    <p class="lead">Get new essays and episodes in your inbox. No spam — unsubscribe anytime.</p>
+    <p class="lead">Get the podcast in your inbox.</p>
 
-    <form class="subscribe-form" action={action} method="post" target="_blank">
-      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address" />
+    <form class="subscribe-form-compact" id="subscribe-form" novalidate>
+      <input type="email" name="email" placeholder="Email" required aria-label="Email address" autocomplete="email" />
       <button class="btn" type="submit">Subscribe</button>
     </form>
+    <p class="subscribe-success" id="subscribe-success" hidden>You're in — check your inbox to confirm.</p>
+    <p class="subscribe-error" id="subscribe-error" hidden>Something went wrong. Try again.</p>
 
     <div class="follow">
-      <a href={site.socials.x} target="_blank" rel="me noopener">Follow on X</a>
+      <a href={site.socials.apple} target="_blank" rel="noopener">Apple Podcasts</a>
+      <a href={site.socials.spotify} target="_blank" rel="noopener">Spotify</a>
+      <a href={site.socials.x} target="_blank" rel="me noopener">X</a>
       <a href={site.socials.instagram} target="_blank" rel="me noopener">Instagram</a>
+      <a href={site.socials.substack} target="_blank" rel="me noopener">Substack</a>
       <a href={site.socials.youtube} target="_blank" rel="me noopener">YouTube</a>
-      <a href="/rss.xml">RSS</a>
     </div>
   </div>
 </Base>
+
+<script>
+  const form    = document.getElementById('subscribe-form')   as HTMLFormElement | null;
+  const success = document.getElementById('subscribe-success') as HTMLElement | null;
+  const errorEl = document.getElementById('subscribe-error')  as HTMLElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (form!.querySelector('input[type=email]') as HTMLInputElement).value.trim();
+    if (!email) return;
+
+    const btn = form!.querySelector('button') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = '…';
+    if (errorEl) errorEl.hidden = true;
+
+    try {
+      const res = await fetch('https://abhieq31.substack.com/api/v1/free', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok || res.status === 200) {
+        form!.hidden = true;
+        if (success) success.hidden = false;
+      } else {
+        throw new Error(String(res.status));
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+      if (errorEl) errorEl.hidden = false;
+    }
+  });
+</script>
