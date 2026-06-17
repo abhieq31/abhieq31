@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import AudioPlayer from '../../components/AudioPlayer.astro';
 import { getPublishedPosts, sortPostsNewestFirst } from '../../lib/posts';
 import { formatDate } from '../../utils';
+import { getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = sortPostsNewestFirst(await getPublishedPosts());
@@ -16,6 +17,8 @@ export async function getStaticPaths() {
 }
 
 const { post, related = [] } = Astro.props;
+const entry = await getEntry('posts', post.id);
+const { Content } = await render(entry!);
 ---
 <Base title={post.title} description={post.subtitle}>
   <article class="container article-container">
@@ -29,7 +32,7 @@ const { post, related = [] } = Astro.props;
       </div>
     )}
 
-    <div class="article-body" set:html={post.content} />
+    <div class="article-body"><Content /></div>
 
     {related.length > 0 && (
       <aside class="related-posts" aria-labelledby="related-title">

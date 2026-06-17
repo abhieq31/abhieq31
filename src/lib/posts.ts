@@ -1,65 +1,43 @@
-import Parser from 'rss-parser';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { excerpt as makeExcerpt } from '../utils';
 
-export interface SubstackPost {
+export type PostEntry = CollectionEntry<'posts'>;
+
+// Flat shape consumed by the feed, archive, cards and RSS.
+// The article page re-fetches the entry by `id` to render the Markdown body.
+export interface Post {
   id: string;
   title: string;
   subtitle: string;
   date: Date;
-  link: string;
   excerpt: string;
-  content: string;
   audio?: string;
   duration?: string;
-  topPost: false;
+  topPost: boolean;
 }
 
-type CustomItem = {
-  'content:encoded': string;
-  enclosure?: { url: string; type: string; length: string };
-  'itunes:duration'?: string;
-};
-
-const parser = new Parser<{}, CustomItem>({
-  customFields: {
-    item: [
-      ['content:encoded', 'content:encoded'],
-      'enclosure',
-      ['itunes:duration', 'itunes:duration'],
-    ],
-  },
-});
-
-let _cache: SubstackPost[] | null = null;
-
-export async function getPublishedPosts(): Promise<SubstackPost[]> {
-  if (_cache) return _cache;
-  try {
-    const feed = await parser.parseURL('https://abhieq31.substack.com/feed');
-    _cache = feed.items.map((item) => {
-      const link = item.link ?? '';
-      const id = link.split('/p/').at(1)?.split('/')[0] ?? link.split('/').pop() ?? crypto.randomUUID();
-      const raw = item['content:encoded'] ?? item.content ?? '';
-      const excerpt = (item.contentSnippet ?? raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim())
-        .slice(0, 260).replace(/\s+\S*$/, '') + '…';
-      return {
-        id,
-        title: item.title ?? '',
-        subtitle: item.contentSnippet?.split('\n')[0] ?? '',
-        date: new Date(item.pubDate ?? Date.now()),
-        link,
-        excerpt,
-        content: raw,
-        audio: item.enclosure?.url,
-        duration: item['itunes:duration'],
-        topPost: false as const,
-      };
-    });
-    return _cache;
-  } catch {
-    return [];
-  }
+function toPost(entry: PostEntry): Post {
+  return {
+    id: entry.id,
+    title: entry.data.title,
+    subtitle: entry.data.subtitle ?? '',
+    date: entry.data.date,
+    excerpt: makeExcerpt(entry.body ?? ''),
+    audio: entry.data.audio,
+    duration: entry.data.duration,
+    topPost: entry.data.topPost ?? false,
+  };
 }
 
-export function sortPostsNewestFirst(posts: SubstackPost[]): SubstackPost[] {
+// Posts authored in TinaCMS land in src/content/posts/*.md.
+// Drafts are hidden in production builds but visible while developing.
+export async function getPublishedPosts(): Promise<Post[]> {
+  const entries = await getCollection('posts', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  );
+  return entries.map(toPost);
+}
+
+export function sortPostsNewestFirst(posts: Post[]): Post[] {
   return [...posts].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 }
