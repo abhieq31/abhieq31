@@ -9,10 +9,7 @@ const posts = sortPostsNewestFirst(await getPublishedPosts());
 <Base>
   <div class="container">
 
-    <div class="site-intro">
-      <p class="intro-line">Technology, business, science, and philosophy.</p>
-      <p class="intro-sub">Essays and conversations — thinking out loud.</p>
-    </div>
+    <div class="hero"></div>
 
     {site.podcastLinks?.length > 0 && (
       <p class="podcast-row">
@@ -31,27 +28,5 @@ const posts = sortPostsNewestFirst(await getPublishedPosts());
 </Base>
 
 <style>
-  .site-intro {
-    padding: clamp(2.5rem, 8vh, 5rem) 0 2.5rem;
-  }
-  .intro-line {
-    font-size: clamp(1.35rem, 3.5vw, 1.75rem);
-    font-weight: 700;
-    color: var(--fg);
-    margin: 0 0 0.4rem;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-  }
-  .intro-sub {
-    font-size: 1.05rem;
-    color: var(--muted-strong);
-    margin: 0;
-  }
-  .empty-state {
-    color: var(--muted);
-    margin-top: 3rem;
-  }
-  .empty-state a {
-    color: var(--accent);
-  }
+  .hero { padding: clamp(1.5rem, 5vh, 3rem) 0 0; }
 </style>

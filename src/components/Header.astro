@@ -58,6 +58,11 @@ const action = site.newsletter?.action || '/subscribe';
   const navDefault = document.getElementById('nav-default')       as HTMLElement | null;
   const subForm    = document.getElementById('nav-subscribe-form') as HTMLFormElement | null;
 
+  // Add a hairline under the header once the page scrolls past the top
+  const onScroll = () => header?.classList.toggle('is-stuck', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   // Mobile hamburger menu: toggle the full-screen overlay + scroll lock
   menuToggle?.addEventListener('click', () => {
     const open = header?.classList.toggle('is-menu-open') ?? false;
