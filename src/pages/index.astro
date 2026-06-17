@@ -8,17 +8,25 @@ const posts = sortPostsNewestFirst(await getPublishedPosts());
 ---
 <Base>
   <div class="container">
+
+    <div class="hero"></div>
+
     {site.podcastLinks?.length > 0 && (
       <p class="podcast-row">
         <span class="label">Podcast</span>
-        {site.podcastLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+        {site.podcastLinks.map((l) => <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a>)}
       </p>
     )}
 
     {posts.length === 0 ? (
-      <p class="empty">No posts yet. Add a Markdown file in <code>src/content/posts/</code>.</p>
+      <p class="empty-state">First essay coming soon — <a href="/subscribe">subscribe</a> to get it in your inbox.</p>
     ) : (
       posts.map((post) => <PostCard post={post} />)
     )}
+
   </div>
 </Base>
+
+<style>
+  .hero { padding: clamp(1.5rem, 5vh, 3rem) 0 0; }
+</style>

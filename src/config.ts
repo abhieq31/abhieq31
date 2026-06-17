@@ -5,8 +5,8 @@
 export const site = {
   // The name shown in the top-left logo and used across the site.
   name: 'Abhi',
-  title: 'Abhi',
-  description: 'Personal site of Abhi — essays, notes, and a podcast.',
+  title: 'Abhi — Thinking out loud',
+  description: 'Technology, business, science, and philosophy — thinking out loud.',
   author: 'Abhi',
 
   // Your social profiles (username: abhieq31).
@@ -14,16 +14,18 @@ export const site = {
     x: 'https://x.com/abhieq31',
     instagram: 'https://instagram.com/abhieq31',
     youtube: 'https://youtube.com/@abhieq31',
+    substack: 'https://abhieq31.substack.com',
+    apple: 'https://podcasts.apple.com/us/podcast/abhi/id1896933970',
+    spotify: 'https://open.spotify.com/show/033ztaq1OfKJkcveYsMWIQ',
   },
 
   // Links shown in the "Podcast" row on the homepage and the "Get podcast" menu.
-  // Replace '#' with your real show URLs as you publish on each platform.
   podcastLinks: [
     { label: 'X', href: 'https://x.com/abhieq31' },
-    { label: 'Apple', href: '#' },
-    { label: 'Spotify', href: '#' },
+    { label: 'Apple', href: 'https://podcasts.apple.com/us/podcast/abhi/id1896933970' },
+    { label: 'Spotify', href: 'https://open.spotify.com/show/033ztaq1OfKJkcveYsMWIQ' },
     { label: 'YouTube', href: 'https://youtube.com/@abhieq31' },
-    { label: 'Substack', href: '#' },
+    { label: 'Substack', href: 'https://abhieq31.substack.com' },
     { label: 'Email', href: '/subscribe' },
   ],
 

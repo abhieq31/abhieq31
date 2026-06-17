@@ -1,23 +1,40 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../config';
-const action = site.newsletter.action;
 ---
-<Base title="Subscribe" description={`Subscribe to ${site.name} — new posts in your inbox.`}>
+<Base title="Subscribe" description={`Subscribe to ${site.name} — new posts and episodes in your inbox.`}>
   <div class="container subscribe-page">
     <h1 class="page-title">Subscribe</h1>
-    <p class="lead">Get new essays and episodes in your inbox. No spam — unsubscribe anytime.</p>
+    <p class="lead">New posts in your inbox.</p>
 
-    <form class="subscribe-form" action={action} method="post" target="_blank">
-      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address" />
+    <!-- Hidden iframe absorbs Substack's redirect so the page stays put -->
+    <iframe name="sub-sink" style="display:none" aria-hidden="true"></iframe>
+
+    <form
+      class="subscribe-form-compact"
+      id="subscribe-form"
+      action="https://abhieq31.substack.com/api/v1/free"
+      method="post"
+      target="sub-sink"
+    >
+      <input type="email" name="email" placeholder="Email" required aria-label="Email address" autocomplete="email" />
       <button class="btn" type="submit">Subscribe</button>
     </form>
-
-    <div class="follow">
-      <a href={site.socials.x} target="_blank" rel="me noopener">Follow on X</a>
-      <a href={site.socials.instagram} target="_blank" rel="me noopener">Instagram</a>
-      <a href={site.socials.youtube} target="_blank" rel="me noopener">YouTube</a>
-      <a href="/rss.xml">RSS</a>
-    </div>
+    <p class="subscribe-success" id="subscribe-success" hidden>You're in — check your inbox to confirm.</p>
   </div>
 </Base>
+
+<script>
+  const form    = document.getElementById('subscribe-form')    as HTMLFormElement | null;
+  const success = document.getElementById('subscribe-success') as HTMLElement | null;
+
+  form?.addEventListener('submit', (e) => {
+    const email = (form!.querySelector('input[type=email]') as HTMLInputElement).value.trim();
+    if (!email) { e.preventDefault(); return; }
+    // Let the form submit into the hidden iframe, then swap UI
+    setTimeout(() => {
+      form!.hidden = true;
+      if (success) success.hidden = false;
+    }, 400);
+  });
+</script>

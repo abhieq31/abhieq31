@@ -1,7 +1,10 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
 var config_default = defineConfig({
-  branch: process.env.TINA_BRANCH || process.env.HEAD || "main",
+  branch: process.env.TINA_BRANCH || // explicit override
+  process.env.VERCEL_GIT_COMMIT_REF || // Vercel
+  process.env.HEAD || // Netlify
+  "main",
   clientId: process.env.TINA_CLIENT_ID || null,
   token: process.env.TINA_TOKEN || null,
   build: {
@@ -12,6 +15,12 @@ var config_default = defineConfig({
     tina: {
       mediaRoot: "media",
       publicFolder: "public"
+    }
+  },
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN || "",
+      stopwordLanguages: ["eng"]
     }
   },
   schema: {
