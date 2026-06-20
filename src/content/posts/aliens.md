@@ -3,6 +3,7 @@ title: Where Are the Aliens?
 subtitle: The universe should be teeming with aliens
 date: 2026-06-16T16:43:07.624Z
 topPost: false
+draft: true
 ---
 
 Let’s talk briefly about the Fermi paradox since we’re talking about aliens. For listeners who don’t know, Enrico Fermi was a famous physicist who was part of the Manhattan Project. He said, “Where are the aliens?” 

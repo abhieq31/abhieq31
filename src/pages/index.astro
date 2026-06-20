@@ -9,7 +9,7 @@ const posts = sortPostsNewestFirst(await getPublishedPosts());
 <Base>
   <div class="container">
 
-    {site.podcastLinks?.length > 0 && (
+    {site.showPodcast && site.podcastLinks?.length > 0 && (
       <p class="podcast-row">
         <span class="label">Podcast</span>
         {site.podcastLinks.map((l) => <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a>)}

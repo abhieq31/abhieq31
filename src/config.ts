@@ -6,7 +6,7 @@ export const site = {
   // The name shown in the top-left logo and used across the site.
   name: 'Abhi',
   title: 'Abhi — Thinking out loud',
-  description: 'Technology, business, science, and philosophy — thinking out loud.',
+  description: 'Technology, software, and business — thinking out loud.',
   author: 'Abhi',
 
   // Your social profiles (username: abhieq31).
@@ -18,6 +18,10 @@ export const site = {
     apple: 'https://podcasts.apple.com/us/podcast/abhi/id1896933970',
     spotify: 'https://open.spotify.com/show/033ztaq1OfKJkcveYsMWIQ',
   },
+
+  // Set true once the podcast is actually live — turns the homepage "Podcast"
+  // row and the "Get podcast" menu on audio posts back on.
+  showPodcast: false,
 
   // Links shown in the "Podcast" row on the homepage and the "Get podcast" menu.
   podcastLinks: [

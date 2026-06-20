@@ -146,16 +146,16 @@ in the homepage feed and on its own page.
 - **Everything else** (name, socials, podcast links, newsletter) lives in
   `src/config.ts`; the theme color is `--accent` in `src/styles/global.css`.
 
-## Decap CMS on Netlify — easiest mobile editor
+## TinaCMS — easiest mobile/browser editor
 
-This repo now includes a Decap CMS admin at `/admin/`. After deploying on Netlify:
+This repo includes a TinaCMS admin at `/admin/`. Sign in there (desktop or
+mobile) and create or edit posts from a form instead of hand-writing
+Markdown. Tina saves posts into `src/content/posts/`, commits to Git, and
+the site rebuilds automatically.
 
-1. In Netlify, enable **Identity** for the site.
-2. Set registration to **Invite only**.
-3. Enable **Git Gateway** under Identity services.
-4. Invite yourself as a user.
-5. Open `/admin/` on desktop or mobile, sign in, and create posts from the form.
+## Podcast stuff is hidden for now
 
-For the URL field, enter one lowercase word from the title, e.g. `hardware` for
-"Vibe Coding Hardware". Decap saves posts into `src/content/posts/`, commits to
-Git, and Netlify rebuilds the site.
+The homepage "Podcast" row and the "Get podcast" platform menu on audio
+posts are switched off via `showPodcast: false` in `src/config.ts`. The
+audio-post template below still works (play button + download), it just
+won't promote podcast platforms until you flip `showPodcast` back to `true`.
