@@ -9,9 +9,10 @@ export function formatDate(date: Date): string {
     .replace(',', '');
 }
 
-// Build a short plain-text excerpt from raw markdown for the homepage feed.
-export function excerpt(body: string, len = 260): string {
-  const text = (body || '')
+// Plain text with markdown syntax stripped — shared by the excerpt and
+// reading-time estimates below.
+function stripMarkdown(body: string): string {
+  return (body || '')
     .replace(/^---[\s\S]*?---/, '')        // strip frontmatter if present
     .replace(/```[\s\S]*?```/g, ' ')        // code blocks
     .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')  // images
@@ -19,6 +20,17 @@ export function excerpt(body: string, len = 260): string {
     .replace(/[#>*_`~]/g, ' ')              // markdown symbols
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// Build a short plain-text excerpt from raw markdown for the homepage feed.
+export function excerpt(body: string, len = 260): string {
+  const text = stripMarkdown(body);
   if (text.length <= len) return text;
   return text.slice(0, len).replace(/\s+\S*$/, '') + '…';
+}
+
+// Estimate reading time at 225 words/minute, rounded up to whole minutes.
+export function readingTime(body: string, wpm = 225): number {
+  const words = stripMarkdown(body).split(' ').filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / wpm));
 }

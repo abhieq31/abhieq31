@@ -46,8 +46,15 @@ const id = 'audio-' + Math.random().toString(36).slice(2, 9);
         audio.pause();
       }
     });
-    audio.addEventListener('play', () => btn.classList.add('playing'));
-    audio.addEventListener('pause', () => btn.classList.remove('playing'));
-    audio.addEventListener('ended', () => btn.classList.remove('playing'));
+    audio.addEventListener('play', () => {
+      btn.classList.add('playing');
+      btn.setAttribute('aria-label', 'Pause episode');
+    });
+    const markPaused = () => {
+      btn.classList.remove('playing');
+      btn.setAttribute('aria-label', 'Play episode');
+    };
+    audio.addEventListener('pause', markPaused);
+    audio.addEventListener('ended', markPaused);
   });
 </script>

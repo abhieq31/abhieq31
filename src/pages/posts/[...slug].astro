@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import AudioPlayer from '../../components/AudioPlayer.astro';
 import { getPublishedPosts, sortPostsNewestFirst } from '../../lib/posts';
 import { formatDate } from '../../utils';
+import { site } from '../../config';
 import { getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -19,10 +20,24 @@ export async function getStaticPaths() {
 const { post, related = [] } = Astro.props;
 const entry = await getEntry('posts', post.id);
 const { Content } = await render(entry!);
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.subtitle || site.description,
+  datePublished: post.date.toISOString(),
+  author: { '@type': 'Person', name: site.author },
+  url: new URL(`/posts/${post.id}/`, Astro.site).href,
+  mainEntityOfPage: new URL(`/posts/${post.id}/`, Astro.site).href,
+};
 ---
 <Base title={post.title} description={post.subtitle}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
   <article class="container article-container">
-    <p class="article-date">{formatDate(post.date)}</p>
+    <p class="article-date">
+      {formatDate(post.date)}{!post.audio && ` · ${post.readingMinutes} min read`}
+    </p>
     <h1 class="article-title">{post.title}</h1>
     {post.subtitle && <p class="article-subtitle">{post.subtitle}</p>}
 

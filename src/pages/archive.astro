@@ -27,7 +27,7 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
       </section>
     ))}
 
-    <p class="empty" id="no-results" hidden>No posts match your search.</p>
+    <p class="empty" id="no-results" role="status" aria-live="polite" hidden>No posts match your search.</p>
   </div>
 
   <script>

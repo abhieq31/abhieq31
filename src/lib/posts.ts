@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { excerpt as makeExcerpt } from '../utils';
+import { excerpt as makeExcerpt, readingTime } from '../utils';
 
 export type PostEntry = CollectionEntry<'posts'>;
 
@@ -11,6 +11,7 @@ export interface Post {
   subtitle: string;
   date: Date;
   excerpt: string;
+  readingMinutes: number;
   audio?: string;
   duration?: string;
   topPost: boolean;
@@ -23,6 +24,7 @@ function toPost(entry: PostEntry): Post {
     subtitle: entry.data.subtitle ?? '',
     date: entry.data.date,
     excerpt: makeExcerpt(entry.body ?? ''),
+    readingMinutes: readingTime(entry.body ?? ''),
     audio: entry.data.audio,
     duration: entry.data.duration,
     topPost: entry.data.topPost ?? false,

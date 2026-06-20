@@ -18,6 +18,6 @@ const url = `/posts/${post.id}/`;
   {post.audio ? (
     <AudioPlayer audio={post.audio} duration={post.duration} date={formatDate(post.date)} />
   ) : (
-    <div class="meta"><span>{formatDate(post.date)}</span></div>
+    <div class="meta"><span>{formatDate(post.date)}</span><span>{post.readingMinutes} min read</span></div>
   )}
 </article>
