@@ -43,6 +43,7 @@ const websiteJsonLd = {
   ],
 };
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -64,9 +65,11 @@ const websiteJsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    {type === 'article' && publishedTime && (
-      <meta property="article:published_time" content={publishedTime} />
-    )}
+    {
+      type === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )
+    }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={desc} />

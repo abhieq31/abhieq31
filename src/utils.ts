@@ -13,11 +13,11 @@ export function formatDate(date: Date): string {
 // reading-time estimates below.
 function stripMarkdown(body: string): string {
   return (body || '')
-    .replace(/^---[\s\S]*?---/, '')        // strip frontmatter if present
-    .replace(/```[\s\S]*?```/g, ' ')        // code blocks
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')  // images
+    .replace(/^---[\s\S]*?---/, '') // strip frontmatter if present
+    .replace(/```[\s\S]*?```/g, ' ') // code blocks
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ') // images
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // links -> link text
-    .replace(/[#>*_`~]/g, ' ')              // markdown symbols
+    .replace(/[#>*_`~]/g, ' ') // markdown symbols
     .replace(/\s+/g, ' ')
     .trim();
 }

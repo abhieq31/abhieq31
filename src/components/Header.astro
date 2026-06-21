@@ -3,6 +3,7 @@ import { site } from '../config';
 const path = Astro.url.pathname;
 const isActive = (href: string) => href !== '/' && path.startsWith(href);
 ---
+
 <header class="site-header" id="site-header">
   <a class="brand" href="/">{site.name}</a>
 
@@ -26,7 +27,12 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
         <span class="desktop-label">X</span><span class="mobile-label">Twitter</span>
       </a>
       <a href={site.socials.instagram} target="_blank" rel="me noopener">Instagram</a>
-      <button class="nav-subscribe-btn" id="subscribe-open" type="button" aria-label="Open subscribe form">Subscribe</button>
+      <button
+        class="nav-subscribe-btn"
+        id="subscribe-open"
+        type="button"
+        aria-label="Open subscribe form">Subscribe</button
+      >
     </nav>
 
     <!-- Inline subscribe form — shown via .open on desktop, always shown inside the mobile menu -->
@@ -51,12 +57,12 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
 </header>
 
 <script>
-  const header     = document.getElementById('site-header');
+  const header = document.getElementById('site-header');
   const menuToggle = document.getElementById('menu-toggle');
-  const openBtn    = document.getElementById('subscribe-open')    as HTMLButtonElement | null;
-  const cancelBtn  = document.getElementById('subscribe-cancel')  as HTMLButtonElement | null;
-  const navDefault = document.getElementById('nav-default')       as HTMLElement | null;
-  const subForm    = document.getElementById('nav-subscribe-form') as HTMLFormElement | null;
+  const openBtn = document.getElementById('subscribe-open') as HTMLButtonElement | null;
+  const cancelBtn = document.getElementById('subscribe-cancel') as HTMLButtonElement | null;
+  const navDefault = document.getElementById('nav-default') as HTMLElement | null;
+  const subForm = document.getElementById('nav-subscribe-form') as HTMLFormElement | null;
 
   // Add a hairline under the header once the page scrolls past the top
   const onScroll = () => header?.classList.toggle('is-stuck', window.scrollY > 8);
@@ -99,7 +105,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
   subForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const emailInput = subForm.querySelector<HTMLInputElement>('input[type=email]');
-    const submitBtn  = subForm.querySelector<HTMLButtonElement>('button[type=submit]');
+    const submitBtn = subForm.querySelector<HTMLButtonElement>('button[type=submit]');
     const email = emailInput?.value.trim();
     if (!email || !submitBtn) return;
 

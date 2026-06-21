@@ -32,7 +32,6 @@ git commit -m "Post: My New Post"
 git push          # Vercel/Netlify redeploys in ~30 seconds
 ```
 
-
 ## From your phone — no terminal
 
 Use the GitHub mobile app or github.com in your mobile browser:
@@ -75,15 +74,15 @@ filename, commit, and the deploy rebuilds automatically.
 
 The block between the `---` lines at the very top of each file:
 
-| Field      | Required | What it does                                              |
-| ---------- | -------- | --------------------------------------------------------- |
-| `title`    | yes      | Post title (feed, archive, page, browser tab).            |
-| `subtitle` | no       | One-line description shown under the title.               |
-| `date`     | yes      | `YYYY-MM-DD`. Controls feed order and the archive year.   |
-| `topPost`  | no       | `true` features it under **Top Posts** in the archive.    |
-| `audio`    | no       | Path to an audio file → turns the post into an episode.   |
-| `duration` | no       | Display length, e.g. `"24:10"` (keep the quotes).         |
-| `draft`    | no       | `true` keeps it out of the build while you're writing.    |
+| Field      | Required | What it does                                            |
+| ---------- | -------- | ------------------------------------------------------- |
+| `title`    | yes      | Post title (feed, archive, page, browser tab).          |
+| `subtitle` | no       | One-line description shown under the title.             |
+| `date`     | yes      | `YYYY-MM-DD`. Controls feed order and the archive year. |
+| `topPost`  | no       | `true` features it under **Top Posts** in the archive.  |
+| `audio`    | no       | Path to an audio file → turns the post into an episode. |
+| `duration` | no       | Display length, e.g. `"24:10"` (keep the quotes).       |
+| `draft`    | no       | `true` keeps it out of the build while you're writing.  |
 
 ---
 
@@ -99,7 +98,7 @@ topPost: false
 
 Open with your strongest sentence.
 
-Write in Markdown — **bold**, *italic*, [links](https://example.com), and:
+Write in Markdown — **bold**, _italic_, [links](https://example.com), and:
 
 - bullet points
 - like this
@@ -120,11 +119,11 @@ More text. Push when you're happy with it.
 
 ```markdown
 ---
-title: "Episode 2: The Topic"
+title: 'Episode 2: The Topic'
 subtitle: Short description of the conversation
 date: 2026-06-16
 audio: /media/episode-2.mp3
-duration: "24:10"
+duration: '24:10'
 topPost: false
 ---
 

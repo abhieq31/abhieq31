@@ -6,21 +6,35 @@ import { site } from '../config';
 
 const posts = sortPostsNewestFirst(await getPublishedPosts());
 ---
+
 <Base>
   <div class="container">
+    {
+      site.showPodcast && site.podcastLinks?.length > 0 && (
+        <p class="podcast-row">
+          <span class="label">Podcast</span>
+          {site.podcastLinks.map((l) => (
+            <a
+              href={l.href}
+              target={l.href.startsWith('http') ? '_blank' : undefined}
+              rel={l.href.startsWith('http') ? 'noopener' : undefined}
+            >
+              {l.label}
+            </a>
+          ))}
+        </p>
+      )
+    }
 
-    {site.showPodcast && site.podcastLinks?.length > 0 && (
-      <p class="podcast-row">
-        <span class="label">Podcast</span>
-        {site.podcastLinks.map((l) => <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a>)}
-      </p>
-    )}
-
-    {posts.length === 0 ? (
-      <p class="empty-state">First essay coming soon &mdash; <a href="/subscribe">subscribe</a> to get it in your inbox.</p>
-    ) : (
-      posts.map((post) => <PostCard post={post} />)
-    )}
-
+    {
+      posts.length === 0 ? (
+        <p class="empty-state">
+          First essay coming soon &mdash; <a href="/subscribe">subscribe</a> to get it in your
+          inbox.
+        </p>
+      ) : (
+        posts.map((post) => <PostCard post={post} />)
+      )
+    }
   </div>
 </Base>

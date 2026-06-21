@@ -40,9 +40,31 @@ export default defineConfig({
             // Mirrors the logic in scripts/new-post.mjs.
             slugify: (values) => {
               const stopWords = new Set([
-                'a','an','and','are','as','at','be','by','for','from','how',
-                'in','into','is','it','its','new','of','on','or','part','the',
-                'to','with','your',
+                'a',
+                'an',
+                'and',
+                'are',
+                'as',
+                'at',
+                'be',
+                'by',
+                'for',
+                'from',
+                'how',
+                'in',
+                'into',
+                'is',
+                'it',
+                'its',
+                'new',
+                'of',
+                'on',
+                'or',
+                'part',
+                'the',
+                'to',
+                'with',
+                'your',
               ]);
               const words = (values.title || '')
                 .toLowerCase()

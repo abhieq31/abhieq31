@@ -59,7 +59,10 @@ for (let i = 0; i < argv.length; i++) {
     const key = a.slice(2);
     const next = argv[i + 1];
     if (key === 'top' || key === 'draft') opts[key] = true;
-    else { opts[key] = next; i++; }
+    else {
+      opts[key] = next;
+      i++;
+    }
   } else {
     opts._.push(a);
   }
@@ -67,20 +70,20 @@ for (let i = 0; i < argv.length; i++) {
 
 const title = opts._.join(' ').trim();
 if (!title) {
-  console.error('Usage: npm run new -- "My Post Title" [--subtitle "..."] [--audio file.mp3] [--duration "24:10"] [--top] [--draft]');
+  console.error(
+    'Usage: npm run new -- "My Post Title" [--subtitle "..."] [--audio file.mp3] [--duration "24:10"] [--top] [--draft]',
+  );
   process.exit(1);
 }
 
-const toWord = (word) => word
-  .toLowerCase()
-  .replace(/['’]/g, '')
-  .replace(/[^a-z0-9]+/g, '')
-  .trim();
+const toWord = (word) =>
+  word
+    .toLowerCase()
+    .replace(/['’]/g, '')
+    .replace(/[^a-z0-9]+/g, '')
+    .trim();
 
-const titleWords = title
-  .split(/\s+/)
-  .map(toWord)
-  .filter(Boolean);
+const titleWords = title.split(/\s+/).map(toWord).filter(Boolean);
 
 const uniqueWords = [...new Set(titleWords)];
 const candidates = uniqueWords
@@ -90,7 +93,9 @@ const candidates = uniqueWords
   .sort((a, b) => titleWords.lastIndexOf(b) - titleWords.lastIndexOf(a));
 
 if (candidates.length === 0) {
-  console.error('✗ Could not find a meaningful one-word slug in the title. Add one distinctive word to the title.');
+  console.error(
+    '✗ Could not find a meaningful one-word slug in the title. Add one distinctive word to the title.',
+  );
   process.exit(1);
 }
 
@@ -99,13 +104,17 @@ await mkdir(POSTS_DIR, { recursive: true });
 const existingSlugs = new Set(
   (await readdir(POSTS_DIR, { withFileTypes: true }))
     .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-    .map((entry) => basename(entry.name, '.md'))
+    .map((entry) => basename(entry.name, '.md')),
 );
 const slug = candidates.find((word) => !existingSlugs.has(word));
 
 if (!slug) {
-  console.error(`✗ No unique one-word slug is available from this title. Tried: ${candidates.join(', ')}`);
-  console.error('  Change the title by adding a distinctive word that has not been used as a post URL.');
+  console.error(
+    `✗ No unique one-word slug is available from this title. Tried: ${candidates.join(', ')}`,
+  );
+  console.error(
+    '  Change the title by adding a distinctive word that has not been used as a post URL.',
+  );
   process.exit(1);
 }
 
@@ -116,7 +125,9 @@ const needsQuotes = (s) => /[:#"']/.test(s) || /^\s|\s$/.test(s);
 const yamlStr = (s) => (needsQuotes(s) ? JSON.stringify(s) : s);
 
 const audio = opts.audio
-  ? (opts.audio.startsWith('/') ? opts.audio : `/media/${opts.audio}`)
+  ? opts.audio.startsWith('/')
+    ? opts.audio
+    : `/media/${opts.audio}`
   : null;
 
 const fm = [
@@ -129,9 +140,7 @@ const fm = [
   `draft: ${opts.draft ? 'true' : 'false'}`,
   '---',
   '',
-  audio
-    ? 'Show notes, links, and timestamps go here.\n'
-    : 'Open with your strongest sentence.\n',
+  audio ? 'Show notes, links, and timestamps go here.\n' : 'Open with your strongest sentence.\n',
 ].join('\n');
 
 const file = join(POSTS_DIR, `${slug}.md`);
@@ -139,9 +148,13 @@ const file = join(POSTS_DIR, `${slug}.md`);
 // Don't clobber an existing post, even if the directory listing changed.
 try {
   await access(file);
-  console.error(`✗ A post already exists at src/content/posts/${slug}.md — add another distinctive word to the title.`);
+  console.error(
+    `✗ A post already exists at src/content/posts/${slug}.md — add another distinctive word to the title.`,
+  );
   process.exit(1);
-} catch { /* file doesn't exist — good */ }
+} catch {
+  /* file doesn't exist — good */
+}
 
 await writeFile(file, fm, 'utf8');
 

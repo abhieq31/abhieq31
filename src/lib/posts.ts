@@ -35,7 +35,7 @@ function toPost(entry: PostEntry): Post {
 // Drafts are hidden in production builds but visible while developing.
 export async function getPublishedPosts(): Promise<Post[]> {
   const entries = await getCollection('posts', ({ data }) =>
-    import.meta.env.PROD ? !data.draft : true
+    import.meta.env.PROD ? !data.draft : true,
   );
   return entries.map(toPost);
 }

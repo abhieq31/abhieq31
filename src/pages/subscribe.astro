@@ -2,7 +2,11 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../config';
 ---
-<Base title="Subscribe" description={`Subscribe to ${site.name} — new posts and episodes in your inbox.`}>
+
+<Base
+  title="Subscribe"
+  description={`Subscribe to ${site.name} — new posts and episodes in your inbox.`}
+>
   <div class="container subscribe-page">
     <h1 class="page-title">Subscribe</h1>
     <p class="lead">New posts in your inbox.</p>
@@ -17,20 +21,32 @@ import { site } from '../config';
       method="post"
       target="sub-sink"
     >
-      <input type="email" name="email" placeholder="Email" required aria-label="Email address" autocomplete="email" />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        aria-label="Email address"
+        autocomplete="email"
+      />
       <button class="btn" type="submit">Subscribe</button>
     </form>
-    <p class="subscribe-success" id="subscribe-success" hidden>You're in — check your inbox to confirm.</p>
+    <p class="subscribe-success" id="subscribe-success" hidden>
+      You're in — check your inbox to confirm.
+    </p>
   </div>
 </Base>
 
 <script>
-  const form    = document.getElementById('subscribe-form')    as HTMLFormElement | null;
+  const form = document.getElementById('subscribe-form') as HTMLFormElement | null;
   const success = document.getElementById('subscribe-success') as HTMLElement | null;
 
   form?.addEventListener('submit', (e) => {
     const email = (form!.querySelector('input[type=email]') as HTMLInputElement).value.trim();
-    if (!email) { e.preventDefault(); return; }
+    if (!email) {
+      e.preventDefault();
+      return;
+    }
     // Let the form submit into the hidden iframe, then swap UI
     setTimeout(() => {
       form!.hidden = true;
