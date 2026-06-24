@@ -9,13 +9,6 @@ export const SOCIALS = [
     active: true,
   },
   {
-    name: "Instagram",
-    href: "https://instagram.com/abhieq31",
-    linkTitle: `${SITE.title} on Instagram`,
-    icon: "instagram",
-    active: true,
-  },
-  {
     name: "Github",
     href: "https://github.com/abhieq31",
     linkTitle: `${SITE.title} on GitHub`,
