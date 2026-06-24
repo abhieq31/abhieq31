@@ -1,0 +1,35 @@
+---
+// Developer shortcut: abhieq31.com/new opens GitHub's editor with a new post
+// pre-filled (commit it and the site auto-deploys).
+const repo = "https://github.com/abhieq31/abhieq31.com";
+const today = new Date().toISOString().slice(0, 10);
+const template = [
+  "---",
+  'title: "Untitled"',
+  `pubDatetime: ${today}T00:00:00Z`,
+  'description: ""',
+  "tags:",
+  "  - personal",
+  "---",
+  "",
+  "Write your post here.",
+  "",
+].join("\n");
+const url = `${repo}/new/main?filename=${encodeURIComponent(
+  "src/content/blog/new-post.md"
+)}&value=${encodeURIComponent(template)}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${url}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={url} />
+    <title>New post →</title>
+  </head>
+  <body style="background:#000;color:#e7e9ea;font-family:system-ui,sans-serif;padding:2rem;">
+    <p>Opening the GitHub editor… <a href={url} style="color:#fff;">Continue →</a></p>
+  </body>
+</html>

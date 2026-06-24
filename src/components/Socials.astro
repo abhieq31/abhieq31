@@ -18,13 +18,14 @@ const iconMap = {
 };
 ---
 
-<div class:list={["flex-wrap justify-center gap-1", { flex: centered }]}>
+<div class:list={["relative flex-wrap justify-center gap-1", { flex: centered }]}>
   {
-    SOCIALS.filter((social) => social.active).map((social) => {
+    SOCIALS.filter(social => social.active).map(social => {
       const IconComponent = iconMap[social.icon as keyof typeof iconMap];
       return (
         <LinkButton
           href={social.href}
+          id={social.icon === "github" ? "github-social" : undefined}
           class="p-2 hover:rotate-6 sm:p-1"
           title={social.linkTitle}
         >
@@ -36,4 +37,46 @@ const iconMap = {
       );
     })
   }
+
+  <div
+    id="gh-graph"
+    class="absolute bottom-full left-1/2 z-20 mb-3 hidden w-[330px] max-w-[80vw] -translate-x-1/2 rounded-lg border border-border bg-background p-3 shadow-xl"
+  >
+    <img
+      src="https://ghchart.rshah.org/abhieq31"
+      alt="Abhi's GitHub contribution graph"
+      class="w-full"
+      loading="lazy"
+    />
+    <p class="mt-2 text-center text-xs text-foreground/60">
+      Click GitHub again to open the profile →
+    </p>
+  </div>
 </div>
+
+<script>
+  function setupGithubGraph() {
+    const link = document.getElementById("github-social");
+    const graph = document.getElementById("gh-graph");
+    if (!link || !graph) return;
+    let revealed = false;
+    link.addEventListener("click", e => {
+      if (revealed) return; // second click → let it navigate to the profile
+      e.preventDefault();
+      graph.classList.remove("hidden");
+      revealed = true;
+      setTimeout(() => {
+        const onDoc = (ev: Event) => {
+          const t = ev.target as Node;
+          if (!graph.contains(t) && !link.contains(t)) {
+            graph.classList.add("hidden");
+            revealed = false;
+            document.removeEventListener("click", onDoc);
+          }
+        };
+        document.addEventListener("click", onDoc);
+      }, 0);
+    });
+  }
+  document.addEventListener("astro:page-load", setupGithubGraph);
+</script>
