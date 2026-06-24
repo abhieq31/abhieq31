@@ -9,13 +9,21 @@ const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
       author: z.string().default(SITE.author),
-      pubDatetime: z.coerce.date(),
+      pubDatetime: z.coerce.date().catch(() => new Date()),
       modDatetime: z.date().optional().nullable(),
       title: z.string(),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       unlisted: z.boolean().optional(),
-      tags: z.array(z.string()).default(["others"]),
+      // Resilient: blank/null/single-string tags never break the build.
+      tags: z.preprocess(v => {
+        if (Array.isArray(v)) {
+          const f = v.filter(x => x != null && String(x).trim() !== "");
+          return f.length ? f : ["others"];
+        }
+        if (typeof v === "string" && v.trim() !== "") return [v.trim()];
+        return ["others"];
+      }, z.array(z.string())),
       ogImage: image().or(z.string()).optional(),
       heroImage: z.string().optional(),
       description: z.string().optional().default(""),
