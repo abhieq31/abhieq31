@@ -4,8 +4,7 @@
 
 **The mission is the boss.**
 
-I build software the way NVIDIA runs meetings — no slides, a whiteboard,
-and an honest number.
+I build software.
 
 </div>
 
