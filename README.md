@@ -12,14 +12,13 @@ I build software.
 
 ## TOP 5 THINGS &nbsp; <sub>`T5T`</sub>
 
-> At NVIDIA, everyone — newest engineer to CEO — writes a short note of the five
-> things most on their mind: what they're **working on**, **watching**, and
-> **troubled by**. Jensen Huang reads a hundred of them a day to catch the weak
-> signal before it gets loud. This profile is mine — raw signal, not a résumé.
+> A short note of the five things most on my mind: what I'm **working on**,
+> **watching**, and **troubled by** — written to catch the weak signal before
+> it gets loud. This profile is that note — raw signal, not a résumé.
 
 **1 · Working on —** [**Pragati**](https://github.com/abhieq31/Pragati), an
-open-source project OS that runs on Jensen Huang's operating system as product
-defaults: your highest-priority task spawns first thing each morning, a
+open-source project OS whose product defaults are an operating philosophy:
+your highest-priority task spawns first thing each morning, a
 first-class whiteboard, Top-5-Things signals flowing flat across the team, and
 a *speed-of-light* delivery forecast (the theoretical fastest finish — the gap
 to it is the queueing you can act on).
@@ -74,6 +73,6 @@ luck) and an on-device computer-vision try-on that costs nothing at any scale.
 
 <div align="center">
 
-*"It's not about how many things you start. It's about what you finish."*
+*It's not about how many things you start. It's about what you finish.*
 
 </div>
