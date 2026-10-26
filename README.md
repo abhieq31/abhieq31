@@ -2,7 +2,7 @@
 
 **Full-stack engineer** — I design, build, and ship production software end-to-end. TypeScript, Next.js, MongoDB, and ML pipelines I can explain line by line.
 
-📍 Gandhinagar, India · 🌐 [abhieq31.com](https://abhieq31.com) · 📧 abhipatel33360@gmail.com
+📍 Gandhinagar, India · 🌐 [abhieq31.com](https://abhieq31.com) · 📧 abhieq31@gmail.com
 
 ---
 
